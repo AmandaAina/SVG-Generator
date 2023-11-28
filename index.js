@@ -1,6 +1,6 @@
 // index.js
-import inquirer from 'inquirer';
-import SVG from 'svg.js';
+const inquirer = require('inquirer');
+const SVG = require('svg.js');
 
 async function generateLogo() {
     // Prompt user for input
@@ -55,5 +55,4 @@ if (require.main === module) {
     generateLogo();
 }
 
-// Export the function for potential use in other modules
-export default generateLogo;
+
