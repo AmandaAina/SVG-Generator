@@ -3,6 +3,7 @@ import inquirer from 'inquirer';
 import SVG from 'svg.js';
 
 async function generateLogo() {
+    // Prompt user for input
     const userInput = await inquirer.prompt([
         {
             type: 'input',
@@ -29,18 +30,18 @@ async function generateLogo() {
 
     // Create SVG file
     const svgFile = 'logo.svg';
-    const dwg = svgwrite.Drawing(svgFile, { profile: 'tiny' });
+    const dwg = SVG(svgFile).size(300, 200);
 
     // Add text to SVG
-    dwg.text(userInput.text, 10, 30).fill(userInput.textColor);
+    dwg.text(userInput.text).fill(userInput.textColor);
 
     // Add chosen shape to SVG
     if (userInput.shape === 'Circle') {
-        dwg.circle(150, 100, 50).fill(userInput.shapeColor);
+        dwg.circle(50).fill(userInput.shapeColor).move(125, 75);
     } else if (userInput.shape === 'Triangle') {
-        dwg.polygon([[100, 20], [20, 180], [180, 180]]).fill(userInput.shapeColor);
+        dwg.polygon([[150, 25], [100, 125], [200, 125]]).fill(userInput.shapeColor);
     } else if (userInput.shape === 'Square') {
-        dwg.rect(75, 25, 50, 150).fill(userInput.shapeColor);
+        dwg.rect(100, 100).fill(userInput.shapeColor).move(100, 50);
     }
 
     // Save SVG file
@@ -49,8 +50,10 @@ async function generateLogo() {
     console.log(`Generated ${svgFile}`);
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+// Check if the script is being run directly
+if (require.main === module) {
     generateLogo();
 }
 
-module.exports = generateLogo;
+// Export the function for potential use in other modules
+export default generateLogo;
